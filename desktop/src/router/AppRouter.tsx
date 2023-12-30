@@ -8,7 +8,7 @@ export const AppRouter = () => {
       <Route path="/" element={<MainPage />} />
       <Route
         path="/chat"
-        element={<ChatPage sessionId={"XXXX-XXXX-XXXX"} onlineUsers={1} />}
+        element={<ChatPage sessionId={"XXXX-XXXX-XXXX"} onlineUsers={0} />}
       />
     </Routes>
   );

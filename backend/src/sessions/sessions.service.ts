@@ -1,24 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { Socket } from 'socket.io';
 
 @Injectable()
 export class SessionsService {
-  create() {
-    return 'This action adds a new session';
+  create(sessionId: string, socket: Socket) {
+    console.log('createSession', sessionId, socket.id);
+    return `This action adds a new ${sessionId} socket ${socket}`;
   }
 
-  findSession() {
-    return `This action returns all sessions`;
+  createMessage(sessionId: string, socket: Socket) {
+    console.log('createSessionMessage', sessionId, socket.id);
+    return `This action adds a new ${sessionId} socket ${socket}`;
   }
 
   findAll() {
-    return `This action returns all sessions`;
+    return `This action returns all sockets`;
   }
 
-  update(id: string) {
-    return `This action updates a #${id} session`;
+  findOne(id: number) {
+    return `This action returns a #${id} socket`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} session`;
+  update(sessionId: string, socket: Socket) {
+    return `This action updates a #${sessionId} socket ${socket}`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} socket`;
   }
 }

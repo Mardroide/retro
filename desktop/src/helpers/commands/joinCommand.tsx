@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const joinCommand = (session: string) => {
   if (!session) return `Please provide a session id.`;
@@ -7,5 +7,5 @@ export const joinCommand = (session: string) => {
     return 'Global chat is disabled.'
   }
 
-  return redirect(`/chat/${session}`, 302);
+  return <Navigate to='/chat' />;
 }
