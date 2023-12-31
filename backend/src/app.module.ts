@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SessionsModule } from './sessions/sessions.module';
+import { ChatModule } from './chat/chat.module';
+
 @Module({
-  imports: [SessionsModule],
+  imports: [ChatModule],
 })
 export class AppModule {}

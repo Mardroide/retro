@@ -2,27 +2,51 @@ import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 
 export const useChatContext = () => {
-  const { sessionId, setSessionId, onlineUsers, setOnlineUsers } =
-    useContext(ChatContext);
+  const {
+    roomId,
+    setRoomId,
+    onlineUsers,
+    setOnlineUsers,
+    userColor,
+    setUserColor,
+    userId,
+    setUserId,
+    socket,
+    setSocket,
+  } = useContext(ChatContext);
 
   function setCurrentUsers(count: number) {
     setOnlineUsers(count);
   }
 
-  function setSessionIdentifier(id: string | null) {
-    setSessionId(id);
+  function setUserRoomId(id: string | null) {
+    setRoomId(id);
+  }
+
+  function setNewUserColor(color: string | null) {
+    setUserColor(color);
+  }
+
+  function setNewUserId(id: number | null) {
+    setUserId(id);
   }
 
   function resetSession() {
-    setSessionId(null);
+    setRoomId(null);
     setOnlineUsers(0);
   }
 
   return {
-    sessionId,
+    roomId,
     onlineUsers,
+    userColor,
+    userId,
     setCurrentUsers,
-    setSessionIdentifier,
+    setUserRoomId,
+    setNewUserColor,
+    setNewUserId,
     resetSession,
+    socket,
+    setSocket,
   };
 };
