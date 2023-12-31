@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useChatContext } from "./useChatContext";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import { wsNameEvents } from "../types/types";
 
 export const useSockets = () => {
@@ -37,15 +37,17 @@ export const useSockets = () => {
     if (!socket) return;
 
     socket.on(wsNameEvents.CREATE_CHAT, (data: any) => {
-      // TODO: handle create chat
+      setUserRoomId(data.roomId);
     })
 
     socket.on(wsNameEvents.DELETE_CHAT, (data: any) => {
-      // TODO: handle delete chat
+      if (data.onlineUsers === 0) {
+        resetSession();
+      }
     })
 
     socket.on(wsNameEvents.LEAVE_CHAT, (data: any) => {
-      // TODO: handle leave chat
+      resetSession();
     })
 
     socket.on(wsNameEvents.CREATE_MESSAGE, (data: any) => {

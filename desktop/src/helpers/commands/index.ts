@@ -9,6 +9,7 @@ export const Commands = {
   join: (session: string) => joinCommand(session),
   leave: (session: string) => leaveCommand(session),
   create: () => createCommand(),
-  msg: (sessionId: string, message: string) => msgCommand(sessionId, message),
+  msg: (roomId: string, message: string, userId: number) =>
+    msgCommand(roomId, message, userId),
   whoami: `I don't know yet`,
 };

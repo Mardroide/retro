@@ -3,7 +3,7 @@ import { Socket } from "socket.io-client";
 
 export interface IChatContext {
   roomId: string;
-  setRoomId: (sessionId: string) => void;
+  setRoomId: (roomId: string) => void;
   onlineUsers: number;
   setOnlineUsers: (onlineUsers: number) => void;
   userColor: string;
@@ -15,8 +15,8 @@ export interface IChatContext {
 }
 
 export const ChatContext = createContext<IChatContext>({
-  roomId: "XXXX-XXXX-XXXX",
-  setRoomId: (sessionId: string) => '',
+  roomId: '',
+  setRoomId: (roomId: string) => 'XXXX-XXXX-XXXX',
   onlineUsers: 0,
   setOnlineUsers: (onlineUsers: number) => 0,
   userColor: "#5DADE2",
