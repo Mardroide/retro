@@ -5,7 +5,7 @@ export const useSocketsEvents = () => {
   const { socket } = useChatContext();
 
   const createChatRoom = () => {
-    socket?.emit(wsNameEvents.CREATE_CHAT, { roomId: null });
+    socket?.emit(wsNameEvents.CREATE_CHAT);
   };
 
   const sendRoomMessage = (roomId: string, message: string, userId: number) => {

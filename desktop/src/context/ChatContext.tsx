@@ -15,14 +15,14 @@ export interface IChatContext {
 }
 
 export const ChatContext = createContext<IChatContext>({
-  roomId: '',
-  setRoomId: (roomId: string) => 'XXXX-XXXX-XXXX',
+  roomId: null,
+  setRoomId: (roomId: string) => roomId,
   onlineUsers: 0,
-  setOnlineUsers: (onlineUsers: number) => 0,
-  userColor: "#5DADE2",
-  setUserColor: (userColor: string) => '',
+  setOnlineUsers: (onlineUsers: number) => onlineUsers,
+  userColor: null,
+  setUserColor: (userColor: string) => userColor,
   userId: 0,
-  setUserId: (userId: number) => 0,
+  setUserId: (userId: number) => userId,
   socket: null,
-  setSocket: (socket: Socket) => null,
+  setSocket: (socket: Socket) => socket,
 });

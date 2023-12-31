@@ -4,6 +4,7 @@ import { UserColorBadge } from "../components/UserColorBadge";
 
 export const ChatPage = () => {
   const chat = useChatContext();
+  console.log(chat)
 
   return (
     <div className="flex justify-between w-full h-full gap-4">
@@ -12,7 +13,7 @@ export const ChatPage = () => {
           <h1 className="text-4xl font-bold">{chat.roomId}</h1>
           <div className="flex items-center gap-2 text-green-700 fill-green-700">
             <UserColorBadge userColor={chat.userColor} />
-            <p>People online: {chat.onlineUsers}/5</p>
+            <p>Current users: {chat.onlineUsers}/5</p>
           </div>
         </div>
       </div>

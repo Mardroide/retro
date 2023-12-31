@@ -31,6 +31,11 @@ export const useChatContext = () => {
     setUserId(id);
   }
 
+  function initSession(id: string) {
+    setRoomId(id);
+    setOnlineUsers(1);
+  }
+
   function resetSession() {
     setRoomId(null);
     setOnlineUsers(0);
@@ -48,5 +53,6 @@ export const useChatContext = () => {
     resetSession,
     socket,
     setSocket,
+    initSession
   };
 };

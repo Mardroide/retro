@@ -19,7 +19,7 @@ export const useSockets = () => {
   } = useChatContext();
 
   const connectChatRoom = useCallback(() => {
-    const tempSocket = io("http://localhost:3000", {
+    const tempSocket = io('http://localhost:3000', {
       withCredentials: true,
       transports: ['websocket'],
       autoConnect: true,
@@ -27,7 +27,7 @@ export const useSockets = () => {
     })
 
     setSocket(tempSocket);
-  }, ["http://localhost:3000"]);
+  }, []);
 
   const disconnectChatRoom = useCallback(() => {
     socket?.disconnect();
@@ -53,7 +53,7 @@ export const useSockets = () => {
     socket.on(wsNameEvents.CREATE_MESSAGE, (data: any) => {
       // TODO: handle create message
     })
-  })
+  }, [socket])
 
   return {
     connectChatRoom,
