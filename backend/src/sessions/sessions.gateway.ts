@@ -18,10 +18,10 @@ export class SessionsGateway implements OnModuleInit {
 
   onModuleInit() {
     this.server.on('connection', (socket) => {
-      console.log('Socket connected: ', socket.id);
+      console.log('Socket connected: ' + socket.id);
 
       socket.on('disconnect', () => {
-        console.log('Socket disconnected: ', socket.id);
+        console.log('Socket disconnected: ' + socket.id);
       });
     });
   }
@@ -31,16 +31,6 @@ export class SessionsGateway implements OnModuleInit {
     socket.join(sessionId);
     socket.to(sessionId).emit('createSession', sessionId);
     return this.server.listenerCount;
-  }
-
-  @SubscribeMessage('createSessionMessage')
-  createMessage(
-    @MessageBody() sessionId: string,
-    @MessageBody() message: string,
-    @ConnectedSocket() socket: Socket,
-  ) {
-    socket.to(sessionId).emit('createSessionMessage', message, sessionId);
-    return { message, sessionId };
   }
 
   @SubscribeMessage('findAllSessions')

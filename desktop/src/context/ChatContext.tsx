@@ -9,7 +9,7 @@ export interface IChatContext {
 
 export const ChatContext = createContext<IChatContext>({
   sessionId: "",
-  setSessionId: (sessionId: string) => '',
+  setSessionId: (sessionId: string) => 'XXXX-XXXX-XXXX',
   onlineUsers: 0,
   setOnlineUsers: (onlineUsers: number) => 0,
 });
