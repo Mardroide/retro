@@ -2,6 +2,7 @@ import { ReactTerminal } from "react-terminal";
 import { useChatContext } from "../hooks/useChatContext";
 import { Navigate } from "react-router-dom";
 import { commandsInfo } from "../types/types";
+import { useSocketsEvents } from "../hooks/useSocketsEvents";
 
 export const CommandProp = () => {
   const {
@@ -12,6 +13,9 @@ export const CommandProp = () => {
     initSession,
     resetSession,
   } = useChatContext();
+
+  const { createChatRoom, deleteChatRoom, leaveChatRoom, sendRoomMessage } =
+    useSocketsEvents();
 
   const helpCommand = () => (
     <div className="flex flex-col gap-2">
@@ -30,7 +34,13 @@ export const CommandProp = () => {
   );
 
   const createCommand = () => {
-    const roomId = "XXXX-XXXX-XXXX";
+    if (roomId !== null) {
+      return (
+        <p className="text-red-600">You are already in a room. Leave first.</p>
+      );
+    }
+
+    createChatRoom();
     initSession(roomId);
 
     return (

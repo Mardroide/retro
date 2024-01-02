@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useChatContext } from "./useChatContext";
 import { io } from "socket.io-client";
-import { wsNameEvents } from "../types/types";
+import { SocketData, wsNameEvents } from "../types/types";
 
 export const useSockets = () => {
   const {
@@ -15,7 +15,7 @@ export const useSockets = () => {
     setNewUserId,
     resetSession,
     socket,
-    setSocket,
+    setRoomSocket
   } = useChatContext();
 
   const connectChatRoom = useCallback(() => {
@@ -26,7 +26,7 @@ export const useSockets = () => {
       forceNew: true
     })
 
-    setSocket(tempSocket);
+    setRoomSocket(tempSocket);
   }, []);
 
   const disconnectChatRoom = useCallback(() => {
@@ -36,21 +36,23 @@ export const useSockets = () => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.on(wsNameEvents.CREATE_CHAT, (data: any) => {
+    socket.on(wsNameEvents.CREATE_CHAT, (data: SocketData) => {
+      console.log(data);
       setUserRoomId(data.roomId);
+      setCurrentUsers(data.onlineUsers);
     })
 
-    socket.on(wsNameEvents.DELETE_CHAT, (data: any) => {
+    socket.on(wsNameEvents.DELETE_CHAT, (data: SocketData) => {
       if (data.onlineUsers === 0) {
         resetSession();
       }
     })
 
-    socket.on(wsNameEvents.LEAVE_CHAT, (data: any) => {
+    socket.on(wsNameEvents.LEAVE_CHAT, (data: SocketData) => {
       resetSession();
     })
 
-    socket.on(wsNameEvents.CREATE_MESSAGE, (data: any) => {
+    socket.on(wsNameEvents.CREATE_MESSAGE, (data: SocketData) => {
       // TODO: handle create message
     })
   }, [socket])

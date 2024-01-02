@@ -28,6 +28,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage(wsNameEvents.CREATE_CHAT)
   create(socket: Socket, @MessageBody() data: ChatDataDto) {
+    console.log('HEllo');
     return this.chatService.create(socket, data);
   }
 

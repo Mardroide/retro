@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
+import { Socket } from "socket.io-client";
 
 export const useChatContext = () => {
   const {
@@ -14,6 +15,11 @@ export const useChatContext = () => {
     socket,
     setSocket,
   } = useContext(ChatContext);
+
+  function setRoomSocket (newSocket: Socket) {
+    console.log(newSocket);
+    setSocket(newSocket);
+  }
 
   function setCurrentUsers(count: number) {
     setOnlineUsers(count);
@@ -52,7 +58,7 @@ export const useChatContext = () => {
     setNewUserId,
     resetSession,
     socket,
-    setSocket,
-    initSession
+    initSession,
+    setRoomSocket,
   };
 };

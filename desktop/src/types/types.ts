@@ -14,6 +14,11 @@ export enum avaibleColors {
   GREY = '#BDC3C7',
 }
 
+export type SocketData = {
+  roomId: string;
+  onlineUsers: number;
+}
+
 export const commandsInfo = [
   {
     command: "help",
