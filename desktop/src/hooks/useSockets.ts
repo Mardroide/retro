@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from "react";
 import { useChatContext } from "./useChatContext";
-import { io } from "socket.io-client";
 import { SocketData, wsNameEvents } from "../types/types";
 
 export const useSockets = () => {
@@ -15,19 +14,8 @@ export const useSockets = () => {
     setNewUserId,
     resetSession,
     socket,
-    setRoomSocket
   } = useChatContext();
-
-  const connectChatRoom = useCallback(() => {
-    const tempSocket = io('http://localhost:3000', {
-      withCredentials: true,
-      transports: ['websocket'],
-      autoConnect: true,
-      forceNew: true
-    })
-
-    setRoomSocket(tempSocket);
-  }, []);
+  console.log('socket', socket);
 
   const disconnectChatRoom = useCallback(() => {
     socket?.disconnect();
@@ -37,15 +25,13 @@ export const useSockets = () => {
     if (!socket) return;
 
     socket.on(wsNameEvents.CREATE_CHAT, (data: SocketData) => {
-      console.log(data);
-      setUserRoomId(data.roomId);
-      setCurrentUsers(data.onlineUsers);
+      const { roomId, onlineUsers } = data;
+      setUserRoomId(roomId);
+      setCurrentUsers(onlineUsers);
     })
 
     socket.on(wsNameEvents.DELETE_CHAT, (data: SocketData) => {
-      if (data.onlineUsers === 0) {
-        resetSession();
-      }
+      // TODO: handle delete chat
     })
 
     socket.on(wsNameEvents.LEAVE_CHAT, (data: SocketData) => {
@@ -58,7 +44,6 @@ export const useSockets = () => {
   }, [socket])
 
   return {
-    connectChatRoom,
     disconnectChatRoom,
   }
 };

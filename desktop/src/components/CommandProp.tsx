@@ -5,17 +5,8 @@ import { commandsInfo } from "../types/types";
 import { useSocketsEvents } from "../hooks/useSocketsEvents";
 
 export const CommandProp = () => {
-  const {
-    onlineUsers,
-    setCurrentUsers,
-    setUserRoomId,
-    roomId,
-    initSession,
-    resetSession,
-  } = useChatContext();
-
-  const { createChatRoom, deleteChatRoom, leaveChatRoom, sendRoomMessage } =
-    useSocketsEvents();
+  const { roomId, onlineUsers, setUserRoomId } = useChatContext();
+  const { createChatRoom } = useSocketsEvents();
 
   const helpCommand = () => (
     <div className="flex flex-col gap-2">
@@ -41,7 +32,6 @@ export const CommandProp = () => {
     }
 
     createChatRoom();
-    initSession(roomId);
 
     return (
       <p className="text-orange-300">
@@ -57,7 +47,6 @@ export const CommandProp = () => {
     }
 
     setUserRoomId(session);
-    setCurrentUsers(onlineUsers + 1);
     return <Navigate to="/chat" />;
   };
 

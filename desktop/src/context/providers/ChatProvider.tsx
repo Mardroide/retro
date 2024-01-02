@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatContext } from "../ChatContext";
-import { Socket } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [roomId, setRoomId] = useState<string>(null);
@@ -8,6 +8,17 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [userColor, setUserColor] = useState<string>(null);
   const [userId, setUserId] = useState<number>(null);
   const [socket, setSocket] = useState<Socket>(null);
+
+  useEffect(() => {
+    const tempSocket = io('http://localhost:3000', {
+      withCredentials: true,
+      transports: ['websocket'],
+      autoConnect: true,
+      forceNew: true
+    })
+
+    setSocket(tempSocket);
+  }, [])
 
   return (
     <ChatContext.Provider

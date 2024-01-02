@@ -6,10 +6,7 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
-      <Route
-        path="/chat"
-        element={<ChatPage sessionId={"XXXX-XXXX-XXXX"} onlineUsers={0} />}
-      />
+      <Route path="/chat" element={<ChatPage />} />
     </Routes>
   );
 };
