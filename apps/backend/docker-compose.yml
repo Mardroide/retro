@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  mongo:
+    container_name: retro-mongo
+    image: mongo:5
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db
+  redis:
+    container_name: retro-redis
+    restart: always
+    image: redis
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ./redis:/data
+    environment:
+      - REDIS_ARGS=--requirepass ${REDIS_PASSWORD}
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: ghcr.io/joeferner/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USERNAME=${REDIS_USERNAME}
+    ports:
+      - '8081:8081'
