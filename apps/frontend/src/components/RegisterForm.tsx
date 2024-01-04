@@ -7,8 +7,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { register } from "@/services/RetroApiService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useToast } from "./ui/use-toast";
+import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -19,6 +22,9 @@ const formSchema = z.object({
 });
 
 export const RegisterForm = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,13 +33,39 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { email, username, password, repeatPassword } = values;
+
+    if (password !== repeatPassword) {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "Passwords do not match. Please try again.",
+      });
+      return;
+    }
+
+    const { status } = await register({ email, username, password });
+
+    if (status === 201) {
+      toast({
+        title: "Welcome to Retro!",
+        description: "Account created successfully",
+      });
+      setTimeout(() => navigate("/chat"), 3000);
+    } else {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "This email or username is already taken.",
+      });
+    }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/5 space-y-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-2/5 max-sm:w-2/3 space-y-3"
+      >
         <FormField
           control={form.control}
           name="email"

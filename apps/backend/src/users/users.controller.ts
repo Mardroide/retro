@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { User } from 'src/common/schemas/user.schema';
 
 @Controller('users')
 export class UsersController {
@@ -11,19 +12,21 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findAllUsers(): Promise<any> {
-    return this.usersService.findAllUsers();
+  @Get(':username')
+  async findUserByUsername(@Param('username') username: string): Promise<User> {
+    return await this.usersService.findUserByUsername(username);
   }
 
-  @Get(':username')
-  findUserByUsername(@Param('username') username: string): Promise<any> {
-    return this.usersService.findUserByUsername(username);
+  @Get(':email')
+  async findUserByEmail(@Param('email') email: string): Promise<User> {
+    return await this.usersService.findUserByEmail(email);
   }
 
   @Get()
   @Delete(':username')
-  removeUserByUsername(@Param('username') username: string): Promise<any> {
-    return this.usersService.removeUserByUsername(username);
+  async removeUserByUsername(
+    @Param('username') username: string,
+  ): Promise<any> {
+    return await this.usersService.removeUserByUsername(username);
   }
 }

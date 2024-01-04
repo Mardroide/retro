@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ChatModule } from './chat/chat.module';
 import {
   CacheModule,
   CacheModuleAsyncOptions,
@@ -37,7 +36,6 @@ import { MongooseModule } from '@nestjs/mongoose';
         uri: configService.get<string>('MONGODB_URI'),
       }),
     }),
-    ChatModule,
     AuthModule,
     UsersModule,
   ],

@@ -1,6 +1,7 @@
 import { GithubLoginButton } from "@/components/GithubLoginButton";
 import { SwitchAuthButton } from "@/components/SwicthAuthButton";
 import { MdKeyboardCommandKey } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -16,12 +17,18 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   return (
     <>
       <div className="flex w-full h-full justify-between">
-        <div className="flex flex-col w-1/2 h-full bg-slate-100 p-8">
-          <span className="flex items-center gap-2 text-2xl font-semibold">
+        <div
+          className="flex flex-col h-full p-8 lg:w-[40%] xl:w-1/2 max-lg:hidden"
+          id="auth-image"
+        >
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-2xl font-semibold text-white"
+          >
             <MdKeyboardCommandKey /> Retro
-          </span>
+          </Link>
         </div>
-        <div className="flex flex-col items-center justify-center w-1/2 h-full">
+        <div className="flex flex-col items-center justify-center h-full w-full lg:w-[60%] xl:w-1/2">
           <div className="flex flex-col items-center mb-5 gap-2">
             <h2 className="font-bold text-xl">{title}</h2>
             <p>{description}</p>
@@ -33,6 +40,12 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           </div>
         </div>
       </div>
+      <Link
+        to="/"
+        className="absolute top-7 left-7 items-center gap-2 text-2xl font-semibold hidden max-lg:flex"
+      >
+        <MdKeyboardCommandKey /> Retro
+      </Link>
       <SwitchAuthButton />
     </>
   );

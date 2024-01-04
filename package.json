@@ -7,12 +7,30 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "turbo run build",
     "start": "turbo run start",
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "Mardroide",
   "license": "ISC",
   "dependencies": {
+    "eslint": "^8.56.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.0.0",
     "turbo": "^1.11.2"
+  },
+  "lint-staged": {
+    "apps/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ],
+    "packages/**/*.ts": [
+      "eslint --fix"
+    ],
+    "*.{ts,tsx,js,jsx,html,css,md}": [
+      "prettier --write"
+    ]
   }
 }
